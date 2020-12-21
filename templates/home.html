@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Sniglet&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<style>
+    html,body{height:100%;margin:0;}
+    body{display:flex;flex-direction: column; justify-content:flex-start;align-items:center;}
+    .text-con{font-size:50px;font-family: 'Sniglet', cursive;margin-top:200px;margin-bottom:20px;}
+    .search-con{display:flex;flex-direction:column;width:320px;border:1px solid #BDBDBD;border-radius:30px;padding:10px;}
+    .search-con input{border:none;}
+    .search-con input:focus {outline:none;}
+    .search-list{display:none;flex-direction:column;width:300px;border:1px solid #BDBDBD;border-radius:10px;padding:10px;}
+</style>
+<body>
+    <div class="text-con">
+        GojaeGle
+    </div>
+    <div class="search-con">
+        <input type="text" id="search_input" placeholder="찾는 게시물을 입력하세요" autocomplete=off>
+    </div>
+    <div class="search-list" id="search-list">
+
+    </div>
+    
+
+    <script> 
+        search_input = document.getElementById('search_input')
+        search_list = document.getElementById('search-list')
+        
+        search_input.onkeyup = async () => 
+        {
+            let json = await fetch('/search', {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                mode: 'cors', // no-cors, cors, *same-origin
+                cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', // include, *same-origin, omit
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                redirect: 'follow', // manual, *follow, error
+                referrer: 'no-referrer', // no-referrer, *client
+                body: JSON.stringify({'data':search_input.value}), // body data type must match "Content-Type" header
+            }).then(res=>res.json())
+
+            
+            search_list.innerHTML = ''
+
+            if(search_input.value != '' && json.length != 0)
+                search_list.style.display='flex'
+            else
+                search_list.style.display='none'
+
+            for(el of json)
+            {
+                console.log(el)
+                search_list.innerHTML += 
+                `
+                <span>${el.fields.title}</span>
+                `
+            }
+        }
+    </script>
+</body>
+</html>
