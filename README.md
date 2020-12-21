@@ -72,6 +72,6 @@ admin.site.register(Post)
 ```
 
 
-그리고 `python manage.py runserver` 명령어로 서버를 열고 [127.0.0.1:8000/admin](127.0.0.1:8000/admin) 주소로 접속, 로그인해주세요
+그리고 `python manage.py runserver` 명령어로 서버를 열고 [127.0.0.1:8000/admin](http://127.0.0.1:8000/admin) 주소로 접속, 로그인해주세요
 
-![]()
+![https://github.com/gojaebeom/django-ajax-search-test/blob/main/images/20201221_165835.png?raw=true](이미지)
